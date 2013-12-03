@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Розстановка кораблів в грі "Морський бій". Завдання для EleksAcademy</title>
+		<script>
+			//Розробив Бережник Іван (ivanberezhnyk@gmail.com)
+			//Створюю двовимірний масив x розміром 12x12
+			var x = new Array(12);
+		 	for (var k = 0; k < 12; k++) x[k] = new Array(12);
+			//Заповнюю його нулями
+			for (var i = 0; i < 12; i++) {
+				for (var j = 0; j < 12; j++) {
+					x[i][j] = '0';
+				}
+			}
+			
+			 function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+			
+			function setShip1(){
+				var a =  getRandomInt(1, 10), b =  getRandomInt(1, 10);
+				var t = x[a][b];
+				if (t!=1 && t!=2){
+					x[a][b]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a][b-1] = 2;
+					x[a][b+1] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b] = 2;
+					x[a+1][b+1] = 2;
+				}
+				else{
+					setShip1();
+				}
+				return;
+			}
+			
+			function setShipHor2(){
+				var a =  getRandomInt(1, 10), b =  getRandomInt(1, 9);
+				var t = x[a][b], t1 = x[a][b+1];
+				if (t == 0 && t1 == 0) {
+					x[a][b]=1;
+					x[a][b+1]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a-1][b+2] = 2;
+					x[a][b-1] = 2;
+					x[a][b+2] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b] = 2;
+					x[a+1][b+1] = 2;
+					x[a+1][b+2] = 2;
+				}
+				else{
+					setShipHor2();
+				}
+				return;
+			}
+			
+			function setShipVert2(){
+				var a =  getRandomInt(1, 9), b =  getRandomInt(1, 10);
+				var t = x[a][b], t1 = x[a+1][b];
+				if (t == 0 && t1 == 0) {
+					x[a][b]=1;
+					x[a+1][b]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a][b-1] = 2;
+					x[a][b+1] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b+1] = 2;
+					x[a+2][b-1] = 2;
+					x[a+2][b] = 2;
+					x[a+2][b+1] = 2;
+				}
+				else{
+					setShipVert2();
+				}
+				return;
+			}
+			
+			function setShipHor3(){
+				var a =  getRandomInt(1, 10), b =  getRandomInt(1, 8);
+				var t = x[a][b], t1 = x[a][b+1], t2 = x[a][b+2];
+				if (t == 0 && t1 == 0 && t2 ==0) {
+					x[a][b]=1;
+					x[a][b+1]=1;
+					x[a][b+2]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a-1][b+2] = 2;
+					x[a-1][b+3] = 2;
+					x[a][b-1] = 2;
+					x[a][b+3] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b] = 2;
+					x[a+1][b+1] = 2;
+					x[a+1][b+2] = 2;
+					x[a+1][b+3] = 2;
+				}
+				else{
+					setShipHor3();
+				}
+				return;
+			}
+			
+			function setShipVert3(){
+				var a =  getRandomInt(1, 8), b =  getRandomInt(1, 10);
+				var t = x[a][b], t1 = x[a+1][b], t2 = x[a+2][b];
+				if (t == 0 && t1 == 0 && t2 ==0) {
+					x[a][b]=1;
+					x[a+1][b]=1;
+					x[a+2][b]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a][b-1] = 2;
+					x[a][b+1] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b+1] = 2;
+					x[a+2][b-1] = 2;
+					x[a+2][b+1] = 2;
+					x[a+3][b-1] = 2;
+					x[a+3][b] = 2;
+					x[a+3][b+1] = 2;
+				}
+				else{
+					setShipVert3();
+				}
+				return;
+			}
+						
+			function setShipHor4(){
+				var a =  getRandomInt(1, 10), b =  getRandomInt(1, 7);
+				var t = x[a][b], t1 = x[a][b+1], t2 = x[a][b+2], t3 = x[a][b+3];
+				if (t == 0 && t1 == 0 && t2 ==0 && t3 == 0) {
+					x[a][b]=1;
+					x[a][b+1]=1;
+					x[a][b+2]=1;
+					x[a][b+3]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a-1][b+2] = 2;
+					x[a-1][b+3] = 2;
+					x[a-1][b+4] = 2;
+					x[a][b-1] = 2;
+					x[a][b+4] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b] = 2;
+					x[a+1][b+1] = 2;
+					x[a+1][b+2] = 2;
+					x[a+1][b+3] = 2;
+					x[a+1][b+4] = 2;
+				}
+				else{
+					setShipHor4();
+				}
+				return;
+			}
+			
+			function setShipVert4(){
+				var a =  getRandomInt(1, 7), b =  getRandomInt(1, 10);
+				var t = x[a][b], t1 = x[a+1][b], t2 = x[a+2][b], t3 = x[a+3][b];
+				if (t == 0 && t1 == 0 && t2 ==0 && t3 == 0) {
+					x[a][b]=1;
+					x[a+1][b]=1;
+					x[a+2][b]=1;
+					x[a+3][b]=1;
+					x[a-1][b-1] = 2;
+					x[a-1][b] = 2;
+					x[a-1][b+1] = 2;
+					x[a][b-1] = 2;
+					x[a][b+1] = 2;
+					x[a+1][b-1] = 2;
+					x[a+1][b+1] = 2;
+					x[a+2][b-1] = 2;
+					x[a+2][b+1] = 2;
+					x[a+3][b-1] = 2;
+					x[a+3][b+1] = 2;
+					x[a+4][b-1] = 2;
+					x[a+4][b] = 2;
+					x[a+4][b+1] = 2;
+				}
+				else{
+					setShipVert4();
+				}
+				return;
+			}
+			
+			function setShip(ship) {
+			var horVert = Math.floor(Math.random() * 2); //повертає 0 або 1, тобто горизонтальний чи вертикальний корабель
+				switch (ship){
+				case 1: 
+					setShip1();
+					break
+				case 2: 
+					if (horVert == 1){	
+						setShipHor2() 
+					}
+					else{
+						setShipVert2()
+					}
+					break
+				case 3: 
+					if (horVert == 1){	
+						setShipHor3() 
+					}
+					else{
+						setShipVert3()
+					}
+					break
+				case 4: 
+					if (horVert == 1){	
+						setShipHor4() 
+					}
+					else{
+						setShipVert4()
+					}
+					break
+				}	
+			}	
+		</script>
+	</head>
+	<body>
+		<h2>Розстановка кораблів в грі "Морський бій". Завдання для EleksAcademy</h2>
+		<table>
+		<script>
+			setShip(4);
+			setShip(3);	setShip(3);
+			setShip(2);	setShip(2);	setShip(2);
+			setShip(1);	setShip(1);	setShip(1);	setShip(1);
+			var c;
+			document.write("<tr><td> </td>");
+			for (var k = 1; k < 11; k++) document.write("<td>"+k+" </td>");
+				document.write("</tr>");
+				for (var i = 1; i < 11; i++) {
+					document.write('<tr><td>'+i+'</td>');
+					for (var j = 1; j < 11; j++) {
+						c=x[i][j]*9;//тимчасова змінна для встановлення кольору тла клітинки
+						document.write('<td bgcolor=#"'+c+c+c+'">&nbsp'+x[i][j]+'&nbsp </td>');
+					}
+					document.write('</tr>');
+				}	
+		</script>
+	</table>
+	</body>
+</html>
