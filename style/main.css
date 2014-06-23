@@ -724,7 +724,7 @@ hr {
     z-index: 1; }
 
   .grid-row {
-    margin-bottom: 10px; }
+    margin-bottom: 4px; }
     .grid-row:last-child {
       margin-bottom: 0; }
     .grid-row:after {
@@ -733,9 +733,9 @@ hr {
       clear: both; }
 
   .grid-cell {
-    width: 57.5px;
-    height: 57.5px;
-    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
     float: left;
     border-radius: 3px;
     background: rgba(238, 228, 218, 0.35); }
