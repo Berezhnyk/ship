@@ -3,11 +3,14 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Розстановка кораблів в грі "Морський бій". Завдання для EleksAcademy</title>
+		<link href="style/main.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
    		TABLE {
-		    width: 300px; /* Ширина таблицы */
-		    border-bottom: 2px solid maroon; /* Линия внизу таблицы */
-		    background: #fffacd; /* Цвет фона таблицы */
+		   // width: 300px; /* Ширина таблицы */
+		  //  border-bottom: 0px solid maroon; /* Линия внизу таблицы */
+		  //  background: #fffacd; /* Цвет фона таблицы */
+			//border: none;
+			padding-bottom:5px;
 		   }
 		   TH {
 		    background: maroon; /* Цвет фона заголовка */
@@ -15,7 +18,9 @@
 		    text-align: left; /* Выравнивание по левому краю */
 		   }
 		   TD, TH {
-		    padding: 3px; /* Поля вокруг текста */
+		    //padding: 3px; /* Поля вокруг текста */
+			width: 40px;
+			height: 40px;
 		   }
 		  </style>
 				
@@ -31,7 +36,26 @@
 				}
 			}
 			
-			 function getRandomInt(min, max) {
+			function getColor(cl) {
+				switch (cl){
+				case 0:
+					cl = 'black';
+					break
+				case 1:
+					cl = 'white';
+					break
+				case 2:
+					cl = 'black';
+					break
+				default:
+					cl = 'black';
+					break
+				}
+				
+				return cl;
+			}
+			
+			function getRandomInt(min, max) {
 				return Math.floor(Math.random() * (max - min + 1)) + min;
 			}
 			
@@ -246,29 +270,33 @@
 		</script>
 	</head>
 	<body>
+		<div class="container">
 		
 		<center>
 		<h2>Розстановка кораблів в грі "Морський бій". Завдання для EleksAcademy</h2>
-		<table style="border-width:0px;">
+		<div class="game-container">
+		<div class="grid-container">
 		<script>
 			setShip(4);
 			setShip(3);	setShip(3);
 			setShip(2);	setShip(2);	setShip(2);
 			setShip(1);	setShip(1);	setShip(1);	setShip(1);
 			var c;
-			document.write("<tr><td> </td>");
-			for (var k = 1; k < 11; k++) document.write("<td>"+k+" </td>");
-				document.write("</tr>");
+			document.write('<div class="grid-row"><div class="grid-cell"></div>');
+			for (var k = 1; k < 11; k++) document.write('<div class="grid-cell">'+k+'</div>');
+				document.write("</div>");
 				for (var i = 1; i < 11; i++) {
-					document.write('<tr><td>'+i+'</td>');
+					document.write('<div class="grid-row"><div class="grid-cell">'+i+'</div>');
 					for (var j = 1; j < 11; j++) {
-						c=x[i][j]*9;//тимчасова змінна для встановлення кольору тла клітинки
-						document.write('<td bgcolor=#"'+c+c+c+'">&nbsp<span style="visibility: hidden;">'+x[i][j]+'</span>&nbsp </td>');
+						document.write('<div class="grid-cell" style="background:' + getColor(x[i][j]) +'"></div>');
 					}
-					document.write('</tr>');
+					document.write('</div>');
 				}	
 		</script>
-	</table>
+	</div>
+	
 	</center>
+	</div>
+	</div>
 	</body>
 </html>
