@@ -6,8 +6,10 @@
 var ShipGenerator = function (contain, isOpponent) {
     var container = contain;
     container.innerText = '';
-    var counter = 0;
+    var counter = 0,
+        opponentCounter = 0;
     var arr = new Array(12);
+    if (!isOpponent) myArray = arr;
     for (var k = 0; k < 12; k++) arr[k] = new Array(12);
 //Заповнюю його нулями
     for (var i = 0; i < 12; i++) {
@@ -249,11 +251,11 @@ var ShipGenerator = function (contain, isOpponent) {
     function getXY(){
         var x = this.getAttribute('data-x'),
             y = this.getAttribute('data-y');
-        if (isOpponent){
+
+        if (isOpponent && counter<20 && x && y){
             console.log(x, ' - ', y);
             var color = getColor(arr[x][y]);
             if (color === 'white'){
-                arr[x][y] = '';
                 this.classList.add('white');
                 writeInfo(x + ':' +y + ' - Молодець, ви потрапили в ціль =) ');
                 counter++;
@@ -263,36 +265,44 @@ var ShipGenerator = function (contain, isOpponent) {
             }else if (color!==''){
                 this.classList.add('gray');
                 writeInfo(x + ':' +y + ' - Мимо =( ');
+                shoot();
             }
+            arr[x][y] = '';
+            this.removeAttribute('data-x');
+            this.removeAttribute('data-y');
         }
-        return {
-            x:x,
-            y:y
-        }
+
     }
 
-    ShipGenerator.prototype.shoot = function (x, y){
-        //if (isOpponent){
-        console.log(x, ' - ', y);
-        var color = getColor(arr[x][y]);
-        if (color === 'white'){
-            arr[x][y] = 0;
-            this.classList.add('white');
-            writeInfo(x + ':' +y + ' - Молодець, ви потрапили в ціль =) ');
-            counter++;
-            if (counter>20){
-                writeInfo(x + ':' +y + ' - Ви перемогли =) ');
-            }
-        }else if (color!==''){
-            this.classList.add('gray');
-            writeInfo(x + ':' +y + ' - Мимо =( ');
-        }
-        //}
-        return {
-            x:x,
-            y:y
+
+    var findCell = function (x, y){
+        var cells = document.getElementsByClassName('grid-cell');
+        for(var i = 11; i<121; i++){
+            var cell = cells[i];
+            if (cell.getAttribute('data-x') == x && cell.getAttribute('data-y') == y) return cell;
         }
     };
+
+    function shoot (){
+        if (opponentCounter>=20)return;
+        var x = getRandomInt(1, 10);
+        var y = getRandomInt(1, 10);
+        var cell = findCell(x, y);
+        if (myArray[x][y] === 1){
+            cell.classList.add('red');
+            writeInfo2(x + ':' +y + ' - Ваш опонент потрапив у ціль =(');
+            opponentCounter++;
+            if (opponentCounter>=20){
+                writeInfo('Ви програли =(');
+                return;
+            }
+            shoot();
+        }else{
+            cell.classList.add('gray');
+            var t = dom.info2.innerText;
+            writeInfo2( (t?(t + ', '):'') + x + ':' +y + ' - Ваш опонент прамазав =)');
+        }
+    }
 
     ShipGenerator.prototype.generateShips =  function (){
         setShip(4);

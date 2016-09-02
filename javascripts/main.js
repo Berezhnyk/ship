@@ -1,4 +1,5 @@
 var dom;
+var myArray;
 document.addEventListener( 'DOMContentLoaded', function () {
     init();
 }, false );
@@ -24,7 +25,7 @@ function init(){
         dom.opponentContainer.hidden = true;
         generate();
         generateOpponent();
-        writeInfo("Ви програли =(");
+        writeInfo('');
     };
     generateOpponent();
 
@@ -40,12 +41,13 @@ function getDom(){
             stop:document.getElementById('stop')
         },
         cells:document.getElementsByClassName('grid-cell'),
-        info:document.getElementById('info')
+        info:document.getElementById('info'),
+        info2:document.getElementById('info2')
     };
 }
 
 function generate(){
-    var generator = new ShipGenerator(dom.myContainer, false);
+    generator = new ShipGenerator(dom.myContainer, false);
     generator.drawShips();
 }
 
@@ -56,4 +58,9 @@ function generateOpponent(){
 
 function writeInfo(message){
     dom.info.innerText = message;
+    dom.info2.innerText = '';
+}
+
+function writeInfo2(message){
+    dom.info2.innerText = message;
 }
