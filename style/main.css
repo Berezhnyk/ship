@@ -7,8 +7,6 @@ html, body {
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 18px; }
 
-body {
-  margin: 80px 0; }
 
 input {
   display: inline-block;
@@ -187,8 +185,7 @@ hr {
 
   100% {
     margin-top: 20%; } }
-.game-container {	
-  margin-top: 40px;
+.game-container {
   position: relative;
   padding: 15px;
   cursor: default;
