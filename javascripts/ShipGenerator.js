@@ -3,34 +3,32 @@
  */
 //Розробив Бережник Іван (ivanberezhnyk@gmail.com)
 //Створюю двовимірний масив x розміром 12x12
-var ShipGenerator = function (contain) {
-    var container = contain[0];
+var ShipGenerator = function (contain, isOpponent) {
+    var container = contain;
     container.innerText = '';
-    var x = new Array(12);
-    for (var k = 0; k < 12; k++) x[k] = new Array(12);
+    var arr = new Array(12);
+    for (var k = 0; k < 12; k++) arr[k] = new Array(12);
 //Заповнюю його нулями
     for (var i = 0; i < 12; i++) {
         for (var j = 0; j < 12; j++) {
-            x[i][j] = '0';
+            arr[i][j] = 0;
         }
     }
-
     function getColor(cl) {
         switch (cl){
             case 0:
                 cl = 'black';
-                break
+                break;
             case 1:
                 cl = 'white';
-                break
+                break;
             case 2:
                 cl = 'black';
-                break
+                break;
             default:
                 cl = 'black';
                 break
         }
-
         return cl;
     }
 
@@ -40,17 +38,17 @@ var ShipGenerator = function (contain) {
 
     function setShip1(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 10);
-        var t = x[a][b];
+        var t = arr[a][b];
         if (t!=1 && t!=2){
-            x[a][b]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a][b-1] = 2;
-            x[a][b+1] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b] = 2;
-            x[a+1][b+1] = 2;
+            arr[a][b]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+1] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b] = 2;
+            arr[a+1][b+1] = 2;
         }
         else{
             setShip1();
@@ -60,20 +58,20 @@ var ShipGenerator = function (contain) {
 
     function setShipHor2(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 9);
-        var t = x[a][b], t1 = x[a][b+1];
+        var t = arr[a][b], t1 = arr[a][b+1];
         if (t == 0 && t1 == 0) {
-            x[a][b]=1;
-            x[a][b+1]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a-1][b+2] = 2;
-            x[a][b-1] = 2;
-            x[a][b+2] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b] = 2;
-            x[a+1][b+1] = 2;
-            x[a+1][b+2] = 2;
+            arr[a][b]=1;
+            arr[a][b+1]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a-1][b+2] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+2] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+1][b+2] = 2;
         }
         else{
             setShipHor2();
@@ -83,20 +81,20 @@ var ShipGenerator = function (contain) {
 
     function setShipVert2(){
         var a =  getRandomInt(1, 9), b =  getRandomInt(1, 10);
-        var t = x[a][b], t1 = x[a+1][b];
+        var t = arr[a][b], t1 = arr[a+1][b];
         if (t == 0 && t1 == 0) {
-            x[a][b]=1;
-            x[a+1][b]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a][b-1] = 2;
-            x[a][b+1] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b+1] = 2;
-            x[a+2][b-1] = 2;
-            x[a+2][b] = 2;
-            x[a+2][b+1] = 2;
+            arr[a][b]=1;
+            arr[a+1][b]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+1] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+2][b-1] = 2;
+            arr[a+2][b] = 2;
+            arr[a+2][b+1] = 2;
         }
         else{
             setShipVert2();
@@ -106,23 +104,23 @@ var ShipGenerator = function (contain) {
 
     function setShipHor3(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 8);
-        var t = x[a][b], t1 = x[a][b+1], t2 = x[a][b+2];
+        var t = arr[a][b], t1 = arr[a][b+1], t2 = arr[a][b+2];
         if (t == 0 && t1 == 0 && t2 ==0) {
-            x[a][b]=1;
-            x[a][b+1]=1;
-            x[a][b+2]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a-1][b+2] = 2;
-            x[a-1][b+3] = 2;
-            x[a][b-1] = 2;
-            x[a][b+3] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b] = 2;
-            x[a+1][b+1] = 2;
-            x[a+1][b+2] = 2;
-            x[a+1][b+3] = 2;
+            arr[a][b]=1;
+            arr[a][b+1]=1;
+            arr[a][b+2]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a-1][b+2] = 2;
+            arr[a-1][b+3] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+3] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+1][b+2] = 2;
+            arr[a+1][b+3] = 2;
         }
         else{
             setShipHor3();
@@ -132,23 +130,23 @@ var ShipGenerator = function (contain) {
 
     function setShipVert3(){
         var a =  getRandomInt(1, 8), b =  getRandomInt(1, 10);
-        var t = x[a][b], t1 = x[a+1][b], t2 = x[a+2][b];
+        var t = arr[a][b], t1 = arr[a+1][b], t2 = arr[a+2][b];
         if (t == 0 && t1 == 0 && t2 ==0) {
-            x[a][b]=1;
-            x[a+1][b]=1;
-            x[a+2][b]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a][b-1] = 2;
-            x[a][b+1] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b+1] = 2;
-            x[a+2][b-1] = 2;
-            x[a+2][b+1] = 2;
-            x[a+3][b-1] = 2;
-            x[a+3][b] = 2;
-            x[a+3][b+1] = 2;
+            arr[a][b]=1;
+            arr[a+1][b]=1;
+            arr[a+2][b]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+1] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+2][b-1] = 2;
+            arr[a+2][b+1] = 2;
+            arr[a+3][b-1] = 2;
+            arr[a+3][b] = 2;
+            arr[a+3][b+1] = 2;
         }
         else{
             setShipVert3();
@@ -158,26 +156,26 @@ var ShipGenerator = function (contain) {
 
     function setShipHor4(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 7);
-        var t = x[a][b], t1 = x[a][b+1], t2 = x[a][b+2], t3 = x[a][b+3];
+        var t = arr[a][b], t1 = arr[a][b+1], t2 = arr[a][b+2], t3 = arr[a][b+3];
         if (t == 0 && t1 == 0 && t2 ==0 && t3 == 0) {
-            x[a][b]=1;
-            x[a][b+1]=1;
-            x[a][b+2]=1;
-            x[a][b+3]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a-1][b+2] = 2;
-            x[a-1][b+3] = 2;
-            x[a-1][b+4] = 2;
-            x[a][b-1] = 2;
-            x[a][b+4] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b] = 2;
-            x[a+1][b+1] = 2;
-            x[a+1][b+2] = 2;
-            x[a+1][b+3] = 2;
-            x[a+1][b+4] = 2;
+            arr[a][b]=1;
+            arr[a][b+1]=1;
+            arr[a][b+2]=1;
+            arr[a][b+3]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a-1][b+2] = 2;
+            arr[a-1][b+3] = 2;
+            arr[a-1][b+4] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+4] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+1][b+2] = 2;
+            arr[a+1][b+3] = 2;
+            arr[a+1][b+4] = 2;
         }
         else{
             setShipHor4();
@@ -187,26 +185,26 @@ var ShipGenerator = function (contain) {
 
     function setShipVert4(){
         var a =  getRandomInt(1, 7), b =  getRandomInt(1, 10);
-        var t = x[a][b], t1 = x[a+1][b], t2 = x[a+2][b], t3 = x[a+3][b];
+        var t = arr[a][b], t1 = arr[a+1][b], t2 = arr[a+2][b], t3 = arr[a+3][b];
         if (t == 0 && t1 == 0 && t2 ==0 && t3 == 0) {
-            x[a][b]=1;
-            x[a+1][b]=1;
-            x[a+2][b]=1;
-            x[a+3][b]=1;
-            x[a-1][b-1] = 2;
-            x[a-1][b] = 2;
-            x[a-1][b+1] = 2;
-            x[a][b-1] = 2;
-            x[a][b+1] = 2;
-            x[a+1][b-1] = 2;
-            x[a+1][b+1] = 2;
-            x[a+2][b-1] = 2;
-            x[a+2][b+1] = 2;
-            x[a+3][b-1] = 2;
-            x[a+3][b+1] = 2;
-            x[a+4][b-1] = 2;
-            x[a+4][b] = 2;
-            x[a+4][b+1] = 2;
+            arr[a][b]=1;
+            arr[a+1][b]=1;
+            arr[a+2][b]=1;
+            arr[a+3][b]=1;
+            arr[a-1][b-1] = 2;
+            arr[a-1][b] = 2;
+            arr[a-1][b+1] = 2;
+            arr[a][b-1] = 2;
+            arr[a][b+1] = 2;
+            arr[a+1][b-1] = 2;
+            arr[a+1][b+1] = 2;
+            arr[a+2][b-1] = 2;
+            arr[a+2][b+1] = 2;
+            arr[a+3][b-1] = 2;
+            arr[a+3][b+1] = 2;
+            arr[a+4][b-1] = 2;
+            arr[a+4][b] = 2;
+            arr[a+4][b+1] = 2;
         }
         else{
             setShipVert4();
@@ -247,38 +245,58 @@ var ShipGenerator = function (contain) {
         }
     }
 
-    function generateShips(){
+    function getXY(){
+        var x = this.getAttribute('data-x'),
+            y = this.getAttribute('data-y');
+        if (isOpponent){
+            console.log(x, ' - ', y);
+            if (getColor(arr[x][y]) === 'white'){
+                this.classList.add('white');
+            }else{
+                this.classList.add('gray');
+            }
+        }
+        return {
+            x:x,
+            y:y
+        }
+    }
+
+    ShipGenerator.prototype.generateShips =  function (){
         setShip(4);
         setShip(3);	setShip(3);
         setShip(2);	setShip(2);	setShip(2);
         setShip(1);	setShip(1);	setShip(1);	setShip(1);
-    }
+    };
 
-    function drawGrid(){
+    ShipGenerator.prototype.drawGrid = function (){
         var grid = document.createElement('div');
         grid.className = "grid-container";
-        for (var i = 0; i<11;i++){
+        for (var x = 0; x<11;x++){
             var row = document.createElement('div');
             row.className="grid-row";
-            for(var j = 0; j<11; j++){
+            for(var y = 0; y<11; y++){
                 var cell = document.createElement('div');
                 cell.className = "grid-cell";
-                if (i===0 && j>0) {
-                    cell.innerText = j;
-                }else if (i>0 && j===0) {
-                    cell.innerText = i;
-                }else if (i!==0 && j!==0){
-                  cell.style.background = getColor(x[i][j]);
+                if (x===0 && y>0) {
+                    cell.innerText = y;
+                }else if (x>0 && y===0) {
+                    cell.innerText = x;
+                }else if (x!==0 && y!==0){
+                    cell.classList.add(isOpponent?'black':getColor(arr[x][y]));
+                    cell.setAttribute('data-x', x);
+                    cell.setAttribute('data-y', y);
+                    cell.onclick = getXY;
                 }
                 row.appendChild(cell);
             }
             container.appendChild(row);
         }
         return grid;
-    }
+    };
 
     ShipGenerator.prototype.drawShips = function(){
-        generateShips();
-        drawGrid();
+        this.generateShips();
+        this.drawGrid();
     }
 };
