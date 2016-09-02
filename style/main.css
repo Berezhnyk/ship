@@ -1050,3 +1050,14 @@ hr {
       animation: pop-in-small 700ms ease 2s both;
       margin-top: 10px;
       height: 76px; } }
+
+
+label{
+  cursor: pointer;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  padding: 5px 10px;
+}
+label:hover{
+  border: 1px solid grey;
+}
