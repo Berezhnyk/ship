@@ -2,7 +2,7 @@
  * Created by Berezhnyk on 30.08.2016.
  */
 //Розробив Бережник Іван (ivanberezhnyk@gmail.com)
-//Створюю двовимірний масив x розміром 12x12
+
 var ShipGenerator = function (contain, isOpponent) {
     var container = contain;
     container.innerText = '';
@@ -10,6 +10,7 @@ var ShipGenerator = function (contain, isOpponent) {
         opponentCounter = 0;
     var arr = new Array(12);
     if (!isOpponent) myArray = arr;
+    var shootedArr = [];
     for (var k = 0; k < 12; k++) arr[k] = new Array(12);
 //Заповнюю його нулями
     for (var i = 0; i < 12; i++) {
@@ -251,7 +252,7 @@ var ShipGenerator = function (contain, isOpponent) {
     function getXY(){
         var x = this.getAttribute('data-x'),
             y = this.getAttribute('data-y');
-
+        if (opponentCounter>=20) return;
         if (isOpponent && counter<20 && x && y){
             console.log(x, ' - ', y);
             var color = getColor(arr[x][y]);
@@ -285,8 +286,15 @@ var ShipGenerator = function (contain, isOpponent) {
 
     function shoot (){
         if (opponentCounter>=20)return;
+
         var x = getRandomInt(1, 10);
         var y = getRandomInt(1, 10);
+
+        if (shootedArr.indexOf(x + ' ' + y) >=0){
+            shoot();
+            return;
+        }
+        shootedArr.push(x + ' ' + y);
         var cell = findCell(x, y);
         if (myArray[x][y] === 1){
             cell.classList.add('red');
