@@ -6,6 +6,7 @@
 var ShipGenerator = function (contain, isOpponent) {
     var container = contain;
     container.innerText = '';
+    var counter = 0;
     var arr = new Array(12);
     for (var k = 0; k < 12; k++) arr[k] = new Array(12);
 //Заповнюю його нулями
@@ -26,7 +27,7 @@ var ShipGenerator = function (contain, isOpponent) {
                 cl = 'black';
                 break;
             default:
-                cl = 'black';
+                cl = '';
                 break
         }
         return cl;
@@ -250,10 +251,18 @@ var ShipGenerator = function (contain, isOpponent) {
             y = this.getAttribute('data-y');
         if (isOpponent){
             console.log(x, ' - ', y);
-            if (getColor(arr[x][y]) === 'white'){
+            var color = getColor(arr[x][y]);
+            if (color === 'white'){
+                arr[x][y] = '';
                 this.classList.add('white');
-            }else{
+                writeInfo(x + ':' +y + ' - Молодець, ви потрапили в ціль =) ');
+                counter++;
+                if (counter>=20){
+                    writeInfo(x + ':' +y + ' - Ви перемогли =) ');
+                }
+            }else if (color!==''){
                 this.classList.add('gray');
+                writeInfo(x + ':' +y + ' - Мимо =( ');
             }
         }
         return {
@@ -261,6 +270,29 @@ var ShipGenerator = function (contain, isOpponent) {
             y:y
         }
     }
+
+    ShipGenerator.prototype.shoot = function (x, y){
+        //if (isOpponent){
+        console.log(x, ' - ', y);
+        var color = getColor(arr[x][y]);
+        if (color === 'white'){
+            arr[x][y] = 0;
+            this.classList.add('white');
+            writeInfo(x + ':' +y + ' - Молодець, ви потрапили в ціль =) ');
+            counter++;
+            if (counter>20){
+                writeInfo(x + ':' +y + ' - Ви перемогли =) ');
+            }
+        }else if (color!==''){
+            this.classList.add('gray');
+            writeInfo(x + ':' +y + ' - Мимо =( ');
+        }
+        //}
+        return {
+            x:x,
+            y:y
+        }
+    };
 
     ShipGenerator.prototype.generateShips =  function (){
         setShip(4);
