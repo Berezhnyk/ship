@@ -587,20 +587,20 @@ hr {
     display: inline-block;
     vertical-align: middle; }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 1050px) {
   html, body {
     font-size: 15px; }
 
   body {
     margin-top: 0;
-    padding: 20px; }
+    }
 
   h1.title {
     font-size: 27px;
     margin-top: 15px; }
 
   .container {
-    width: 280px;
+    width: 550px;
     margin: 0 auto; }
 
   .score-container, .best-container {
@@ -625,7 +625,6 @@ hr {
     margin-top: 2px; }
 
   .game-container {
-    margin-top: 17px;
     position: relative;
     padding: 10px;
     cursor: default;
@@ -1057,7 +1056,6 @@ label:hover{
 .game{
   display: inline-flex;
   margin: 10px 0;
-  width: 1100px;
 }
 
 .black{

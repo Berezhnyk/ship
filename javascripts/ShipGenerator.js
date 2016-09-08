@@ -40,6 +40,10 @@ var ShipGenerator = function (contain, isOpponent) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    function isKill(a, b){
+        var t = arr[a][b];
+        return;
+    }
     function setShip1(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 10);
         var t = arr[a][b];
