@@ -13,7 +13,7 @@ a {
   cursor: pointer; }
 
 .container {
-  width: 1050px;
+  width: 1450px;
   margin: 0 auto; }
 
 .game-container {
@@ -23,8 +23,8 @@ a {
 
   background: #bbada0;
   border-radius: 6px;
-  width: 520px;
-  height: 520px;
+  width: 700px;
+  height: 700px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -44,14 +44,77 @@ a {
     clear: both; }
 
 .grid-cell {
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   margin-right: 5px;
   float: left;
   border-radius: 3px;
   background: rgba(238, 228, 218, 0.35); }
   .grid-cell:last-child {
     margin-right: 0; }
+
+
+@media screen and (max-width: 1550px) {
+  html, body {
+    font-size: 20px;
+  }
+
+  body {
+    margin-top: 0;
+  }
+
+  .container {
+    width: 1100px;
+    margin: 0 auto;
+  }
+
+  .game-container {
+    position: relative;
+    padding: 10px;
+    cursor: default;
+
+    background: #bbada0;
+    border-radius: 6px;
+    width: 500px;
+    height: 500px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1;
+  }
+
+  .grid-row {
+    margin-bottom: 4px;
+  }
+
+  .grid-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .grid-row:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  .grid-cell {
+    width: 40px;
+    height: 40px;
+    margin-right: 4px;
+    float: left;
+    border-radius: 3px;
+    background: rgba(238, 228, 218, 0.35);
+  }
+
+  .grid-cell:last-child {
+    margin-right: 0;
+  }
+}
+
 
 @media screen and (max-width: 1050px) {
   html, body {
@@ -113,6 +176,8 @@ a {
     margin-right: 0;
   }
 }
+
+
 label{
   cursor: pointer;
   border-radius: 2px;
