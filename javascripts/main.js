@@ -28,7 +28,6 @@ function init(){
         writeInfo('');
     };
     generateOpponent();
-
 }
 
 function getDom(){
