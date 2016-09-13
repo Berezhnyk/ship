@@ -20,18 +20,18 @@ var ShipGenerator = function (contain, isOpponent) {
     }
     function getColor(cl) {
         switch (cl){
-            case 0:
-                cl = 'black';
-                break;
-            case 1:
-                cl = 'white';
-                break;
-            case 2:
-                cl = 'black';
-                break;
-            default:
-                cl = '';
-                break
+        case 0:
+            cl = 'black';
+            break;
+        case 1:
+            cl = 'white';
+            break;
+        case 2:
+            cl = 'black';
+            break;
+        default:
+            cl = '';
+            break;
         }
         return cl;
     }
@@ -41,9 +41,47 @@ var ShipGenerator = function (contain, isOpponent) {
     }
 
     function isKill(a, b){
-        var t = arr[a][b];
-        return;
+        return (myArray[a-1][b] === 2 && myArray[a+1][b]=== 2 && myArray[a][b-1]=== 2&& myArray[a][b+1]=== 2&& myArray[a-1][b-1]=== 2&& myArray[a+1][b+1]=== 2&& myArray[a-1][b+1]=== 2&& myArray[a+1][b-1]=== 2);
     }
+
+    function kill(a, b){
+        if(myArray[a-1][b] === 2){
+            checkAsKilled(a-1, b);
+        }
+        if(myArray[a+1][b] === 2){
+            checkAsKilled(a+1, b);
+        }
+        if(myArray[a][b-1] === 2){
+            checkAsKilled(a, b-1);
+        }
+        if(myArray[a][b+1] === 2){
+            checkAsKilled(a, b+1);
+        }
+        if(myArray[a-1][b-1] === 2){
+            checkAsKilled(a-1, b-1);
+        }
+        if(myArray[a+1][b+1] === 2){
+            checkAsKilled(a+1, b+1);
+        }
+        if(myArray[a-1][b+1] === 2){
+            checkAsKilled(a-1, b+1);
+        }
+        if(myArray[a+1][b-1] === 2){
+            checkAsKilled(a+1, b-1);
+        }
+    }
+
+    function checkAsKilled(x, y){
+        if (shootedArr.indexOf(x + ' ' + y) >=0){
+            return;
+        }
+        shootedArr.push(x + ' ' + y);
+        var cell = findCell(x, y);
+        if (cell && myArray[x][y] === 2){
+            cell.classList.add('gray');
+        }
+    }
+
     function setShip1(){
         var a =  getRandomInt(1, 10), b =  getRandomInt(1, 10);
         var t = arr[a][b];
@@ -223,33 +261,33 @@ var ShipGenerator = function (contain, isOpponent) {
     function setShip(ship) {
         var horVert = Math.floor(Math.random() * 2); //повертає 0 або 1, тобто горизонтальний чи вертикальний корабель
         switch (ship){
-            case 1:
-                setShip1();
-                break;
-            case 2:
-                if (horVert == 1){
-                    setShipHor2()
-                }
-                else{
-                    setShipVert2()
-                }
-                break;
-            case 3:
-                if (horVert == 1){
-                    setShipHor3()
-                }
-                else{
-                    setShipVert3()
-                }
-                break;
-            case 4:
-                if (horVert == 1){
-                    setShipHor4()
-                }
-                else{
-                    setShipVert4()
-                }
-                break
+        case 1:
+            setShip1();
+            break;
+        case 2:
+            if (horVert == 1){
+                setShipHor2();
+            }
+            else{
+                setShipVert2();
+            }
+            break;
+        case 3:
+            if (horVert == 1){
+                setShipHor3();
+            }
+            else{
+                setShipVert3();
+            }
+            break;
+        case 4:
+            if (horVert == 1){
+                setShipHor4();
+            }
+            else{
+                setShipVert4();
+            }
+            break;
         }
     }
 
@@ -258,7 +296,6 @@ var ShipGenerator = function (contain, isOpponent) {
             y = this.getAttribute('data-y');
         if (opponentCounter>=20) return;
         if (isOpponent && counter<20 && x && y){
-            console.log(x, ' - ', y);
             var color = getColor(arr[x][y]);
             if (color === 'white'){
                 this.classList.add('white');
@@ -302,11 +339,15 @@ var ShipGenerator = function (contain, isOpponent) {
         var cell = findCell(x, y);
         if (myArray[x][y] === 1){
             cell.classList.add('red');
+            myArray[x][y] = 0;
             writeInfo2(x + ':' +y + ' - Ваш опонент потрапив у ціль =(');
             opponentCounter++;
             if (opponentCounter>=20){
                 writeInfo('Ви програли =(');
                 return;
+            }
+            if (isKill(x, y)){
+                kill(x, y);
             }
             shoot();
         }else{
@@ -325,13 +366,13 @@ var ShipGenerator = function (contain, isOpponent) {
 
     ShipGenerator.prototype.drawGrid = function (){
         var grid = document.createElement('div');
-        grid.className = "grid-container";
+        grid.className = 'grid-container';
         for (var x = 0; x<11;x++){
             var row = document.createElement('div');
-            row.className="grid-row";
+            row.className='grid-row';
             for(var y = 0; y<11; y++){
                 var cell = document.createElement('div');
-                cell.className = "grid-cell";
+                cell.className = 'grid-cell';
                 if (x===0 && y>0) {
                     cell.innerText = y;
                 }else if (x>0 && y===0) {
@@ -352,5 +393,5 @@ var ShipGenerator = function (contain, isOpponent) {
     ShipGenerator.prototype.drawShips = function(){
         this.generateShips();
         this.drawGrid();
-    }
+    };
 };

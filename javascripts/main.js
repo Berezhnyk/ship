@@ -1,5 +1,6 @@
 var dom;
-var myArray;
+var mySg,
+    opponentSg;
 document.addEventListener( 'DOMContentLoaded', function () {
     init();
 }, false );
@@ -28,13 +29,13 @@ function init(){
         writeInfo('');
     };
     generateOpponent();
-
 }
 
 function getDom(){
     return {
         myContainer:document.getElementsByClassName('game-container')[0],
         opponentContainer:document.getElementsByClassName('game-container')[1],
+        //testContainer:document.getElementsByClassName('game-container')[2],
         buttons:{
             generate:document.getElementById('generate'),
             start:document.getElementById('start'),
@@ -47,13 +48,15 @@ function getDom(){
 }
 
 function generate(){
-    generator = new ShipGenerator(dom.myContainer, false);
-    generator.drawShips();
+    mySg = new SG(dom.myContainer, false);
+    mySg.generate();
+    mySg.show();
 }
 
 function generateOpponent(){
-    var opponentGenerator = new ShipGenerator(dom.opponentContainer, true);
-    opponentGenerator.drawShips();
+    opponentSg = new SG(dom.opponentContainer, true);
+    opponentSg.generate();
+    opponentSg.show();
 }
 
 function writeInfo(message){

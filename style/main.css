@@ -192,7 +192,6 @@ label:hover{
   display: inline-flex;
   margin: 10px 0;
 }
-
 .black{
   background-color: black;
 }
@@ -205,6 +204,9 @@ label:hover{
 }
 .red{
   background-color: red;
+}
+.pink{
+  background-color: #ffc8db;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
