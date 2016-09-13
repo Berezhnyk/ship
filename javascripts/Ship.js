@@ -1,84 +1,186 @@
 /**
  * Created by Berezhnyk on 9/9/2016.
  */
-function  Ship (length, x, y){
-    var cells = [],
-        killed = false,
-        countKilled = 0,
-        isHorisontal = (Math.floor(Math.random() * 2) > 0),
-        relatedCells = [];
-    var _cell = {
-        cell:{
-            isShot : false,
-            set setShoot(x){
-                if(this.getShoot) return;
-                this.isShot = x;
-                countKilled++;
-                if (countKilled === length) killed = true;
-            },
-            get getShoot(){
-                return this.isShot;
-            }
-        },
-        setCoords: function (x, y) {
-            this.x = x;
-            this.y = y;
-        },
-        x:0,
-        y:0
+function Ship (length, x, y){
+    var self = this;
+    self.length = length;
+    self.killed = false;
+    self.cells = [];
+    self.countKilled = 0;
+    self.isHorisontal = (Math.floor(Math.random() * 2) > 0);
+    self.relatedCells = [];
+    self.setKilled = function (){
+        self.killed = true;
     };
-    var addCell = function (x, y) {
-        var cell = Object.create(_cell);
-        cell.setCoords(x, y);
-        cells.push(cell);
-    };
-    Ship.prototype.cells = function (){
-        return cells;
-    };
-    Ship.prototype.killed = function () {
-        return killed;
-    };
-    Ship.prototype.length = function () {
-        return length;
-    };
-    Ship.prototype.isHorisontal = function (){
-        return isHorisontal;
-    };
-    Ship.prototype.setLength = function (l, x, y) {
-        length = l;
-        cells = [];
-        killed = false;
-        countKilled = 0;
+
+    self.setLength = function (l, x, y) {
+        self.length = l;
+        self.killed = false;
+        self.countKilled = 0;
+        if (self.isHorisontal){self.relatedCells.push({x:x, y:y-1,xy:'' +x + '_' +(y-1)})}else{self.relatedCells.push({x:x-1, y:y,xy:'' +(x-1) + '_' +y})}
         for (var i = 0; i<l;i++) {
-            addCell(x, y);
+            var cell = new Cell(self).setCoords(x, y);
+            //console.log(cell.ship.length());
+            self.cells.push(cell);
+            self.relatedCells.push({x:x,y:y,xy:'' +x + '_' +y});
+            self.relatedCells.push({x:x-1,y:y-1,xy:'' +(x-1) + '_' +(y-1)});
+            self.relatedCells.push({x:x+1,y:y+1,xy:'' +(x+1) + '_' +(y+1)});
+            self.relatedCells.push({x:x-1,y:y+1,xy:'' +(x-1) + '_' +(y+1)});
+            self.relatedCells.push({x:x+1,y:y-1,xy:'' +(x+1) + '_' +(y-1)});
+            if (self.isHorisontal){
+                self.relatedCells.push({x:x-1,y:y,xy:'' +(x-1) + '_' +y});
+                self.relatedCells.push({x:x+1,y:y,xy:'' +(x+1) + '_' +y});
+               y++;
+            }else{
+                self.relatedCells.push({x:x,y:y-1,xy:'' +x + '_' +(y-1)});
+                self.relatedCells.push({x:x,y:y+1,xy:'' +x + '_' +(y+1)});
+               x++;
+            }
         }
-        relatedCells.push({x:x,y:y});
-        return cells;
+        if (self.isHorisontal){self.relatedCells.push({x:x, y:y,xy:'' +x + '_' +y})}else{self.relatedCells.push({x:x, y:y,xy:'' +x + '_' +y})}
+        return self.cells;
     };
     length = length || 0;
     x = x || 0;
     y = y || 0;
     if (length>0){
-        Ship.prototype.setLength(length, x, y);
+        self.setLength(length, x, y);
     }
+    
+    self.filledCells = function () {
+        return self.relatedCells;
+    };
+    
+
+}
+
+function Cell(ship) {
+    var self = this;
+    self.isShoot = false;
+
+    self.setShoot = function () {
+        if(self.isShoot) return;
+
+        self.isShoot = true;
+        ship.countKilled++;
+        var l = ship.length;
+        if (ship.countKilled === l) {
+            ship.setKilled();
+        }
+    };
+
+    Cell.prototype.setCoords = function (x, y) {
+        Cell.x = x;
+        Cell.y = y;
+        Cell.xy = '' + x + '_' + y;
+        var res = {
+            x:Cell.x,
+            y:Cell.y,
+            xy:Cell.xy,
+            cell:self
+        };
+
+        return res;
+    };
+   // console.log('ship ' + ship.length(), ship);
 }
 
 function BattleField(width, height){
+    var self = this;
     width = width || 0;
     height = height || 0;
+    self.cells = [];
+    self.ships = [];
+    var
+        //cells = [],
+        shipsArr = [],
+        filledCells = [];
 
-    var ships = [];
-    for (var i = 0; i < width; i++) {
-        for (var j = 0; j < height; j++) {
-            ships[i][j] = 0;
-        }
-    }
+    BattleField.prototype.getShipByCell = function (x, y) {
+        //console.log(self.ships);
+    };
 
     BattleField.prototype.getShips = function () {
-        return ships;
+        return self.ships;
+    };
+    BattleField.prototype.getShipsArr = function () {
+        return shipsArr;
+    };
+    BattleField.prototype.getCells = function () {
+        return self.cells;
     };
 
-    BattleField.prototype.addShip = function (ship) {
-        ships.push(ship);
+    BattleField.prototype.addShip = function (length) {
+        var x = getRandomInt(1, width-length +1);
+        var y = getRandomInt(1, height-length +1);
+        var ship = new Ship(length, x, y);
+        var cel = ship.cells;
+        var rel = ship.filledCells();
+        if (cel.some(infilledCells)) {
+            BattleField.prototype.addShip(length);
+            return;
+        }
+
+        for(var j = 0; j<cel.length;j++){
+            shipsArr[cel[j].x][cel[j].y] = 1;
+            cel[j].ship = ship;
+        }
+
+        for(var i = 0; i<rel.length;i++){
+            if (shipsArr[rel[i].x][rel[i].y]!== 1){
+                shipsArr[rel[i].x][rel[i].y] = 2;
+            }
+        }
+
+        filledCells = filledCells.concat(rel);
+        self.cells = self.cells.concat(cel);
+        self.ships.push(ship);
+
+        //console.log(self.cells, '|', ship,  ship.length)
+
     };
+
+    function infilledCells(element, index, array){
+        var ind = arrayObjectIndexOf(filledCells, '' +element.x +'_' + element.y, 'xy');
+        return ind>=0;
+    }
+
+    function init(){
+        fillArray(width+2, height+2);
+
+    }
+
+    function fillArray(w, h){
+        for (var i = 0; i < w; i++) {
+            shipsArr[i] = [];
+            for (var j = 0; j < h; j++) {
+                shipsArr[i][j] = 0;
+            }
+        }
+    }
+    init();
+}
+
+function arrayObjectIndexOf(myArray, searchTerm, prop) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+        if (myArray[i][prop] === searchTerm) return i;
+    }
+    return -1;
+}
+
+function removeClass(obj, cls) {
+    var classes = obj.className.split(' ');
+
+    for (var i = 0; i < classes.length; i++) {
+        if (classes[i] == cls) {
+            classes.splice(i, 1); // удалить класс
+            i--; // (*)
+        }
+    }
+    obj.className = classes.join(' ');
+
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
