@@ -11,6 +11,7 @@
     self.countKilled = 0;
     self.loss = false;
     self.cells = [];
+    self.filledCells = [];
     self.tryShootCell = tryShootCell;
     self.width = 10;
     self.height = 10;
@@ -73,15 +74,23 @@
 
     function shootCell(cel, x, y){
         if (self.loss) return;
+        var xy = '' + x + '_' + y;
         if (cel && !cel.cell.isShoot){
             wound(cel.x, cel.y);
             cel.cell.setShoot();
             if (cel.ship.killed){
                 kill(cel.ship);
             }
+            if(!inFilledCells(xy)){
+                appendFilledCells(xy);
+            }
             return true;
         }else{
             past(x, y);
+
+            if(!inFilledCells(xy)){
+                appendFilledCells(xy);
+            }
             return false;
         }
     }
@@ -89,6 +98,14 @@
     function tryShootCell(x, y){
         var cel = findCell(x, y);
         return shootCell(cel, x, y);
+    }
+
+    function appendFilledCells(xy){
+        self.filledCells = self.filledCells.concat(xy);
+    }
+
+    function inFilledCells(xy){
+        return (self.filledCells.indexOf(xy) >= 0)
     }
 
     function wound(x, y){
