@@ -6,9 +6,9 @@
 		<link href="style/main.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
+	<h2>Морський бій</h2>
 		<div class="container">
-			<h2>Морський бій</h2>
-			<div style="width: 100%;">
+			<div class="info-container">
 				<label id="generate">Генерувати</label>
 				<label id="start">Розпочати нову гру</label>
 				<label id="stop" hidden>Завершити гру</label>
@@ -18,13 +18,15 @@
 				</div>
 				<div class="game-container" hidden>
 				</div>
+			</div>
 
-			</div>
-			<div style="width: 100%;">
-				<span><label id="info"></label></span>
-				<span><label id="info2"></label></span>
-			</div>
 		</div>
+	<div class="info-container">
+		<label style="width: 100%;" id="info"></label>
+	</div>
+	<div class="info-container">
+		<label id="info2"></label>
+	</div>
 		<script src="javascripts/Ship.js"></script>
 		<script src="javascripts/ShipGenerator.js"></script>
 		<script src="javascripts/SG.js"></script>

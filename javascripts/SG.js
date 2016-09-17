@@ -51,6 +51,7 @@
                         }
 
                         cell.onclick = function () {
+                            if (self.loss) return;
                             var x = this.getAttribute('data-x');
                             var y = this.getAttribute('data-y');
                             if (tryShootCell(x, y)){
