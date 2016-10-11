@@ -2,21 +2,23 @@
  * Created by Berezhnyk on 9/12/2016.
  */
 
- function SG (container, isOpponent){
+ function SG (container, opponent){
     var self = this;
     self.dom ={
         cells :{}
     };
-    self.isOpponent = isOpponent;
+    self.opponent = opponent;
     self.countKilled = 0;
     self.loss = false;
     self.cells = [];
-    self.tryShootCell = tryShootCell;
     self.width = 10;
     self.height = 10;
     container.innerText = '';
     self.shipsArr = [];
     self.battleField = null;
+    self.filledCellsArr = [];
+
+    init();
 
     SG.prototype.generate = function () {
         self.battleField = new BattleField(self.width, self.height);
@@ -45,7 +47,7 @@
 
                         cell.setAttribute('data-x', x);
                         cell.setAttribute('data-y', y);
-                        if (!isOpponent){
+                        if (!opponent){
                             cell.classList.add( getColor(self.shipsArr[x][y]));
                             continue;
                         }
@@ -54,12 +56,14 @@
                             if (self.loss) return;
                             var x = this.getAttribute('data-x');
                             var y = this.getAttribute('data-y');
-                            if (tryShootCell(x, y)){
+                            if (inFilledCells(x, y)) return;
+                            if (self.tryShootCell(x, y)){
                              console.log('shot')
                             }else {
-                                var a = getRandomInt(1, mySg.width);
-                                var b = getRandomInt(1, mySg.height);
-                                var c = mySg.tryShootCell(a, b);
+
+                                var a = getRandomInt(1, opponent.width);
+                                var b = getRandomInt(1, opponent.height);
+                                var c = self.opponent.tryShootCell(a, b, opponent);
                             }
                         };
                     //}
@@ -68,72 +72,87 @@
         }
     };
 
+    SG.prototype.tryShootCell = function(x, y, _self){
+        _self = _self || self;
+        var cel = findCell(x, y, _self);
+        return shootCell(cel, x, y, _self);
+    };
+
     function loss(){
         self.loss = true;
+        dom.writeInfo(self.opponent?'Ви перемогли!!!':'Ви програли=(');
     }
 
-    function shootCell(cel, x, y){
-        if (self.loss) return;
+    function shootCell(cel, x, y, _self){
+        _self = _self || self;
+        if (_self.loss) return;
+        if (!inFilledCells(x, y, _self)) _self.filledCellsArr.push(x+'_'+y);
         if (cel && !cel.cell.isShoot){
-            wound(cel.x, cel.y);
+            wound(cel.x, cel.y, _self);
             cel.cell.setShoot();
             if (cel.ship.killed){
-                kill(cel.ship);
+                kill(cel.ship, _self);
             }
             return true;
         }else{
-            past(x, y);
+            past(x, y, _self);
             return false;
         }
     }
 
-    function tryShootCell(x, y){
-        var cel = findCell(x, y);
-        return shootCell(cel, x, y);
+
+
+    function wound(x, y, _self){
+        _self = _self || self;
+        _self.dom.cells['cell'+x+'_' +y].classList.add('pink');
     }
 
-    function wound(x, y){
-        self.dom.cells['cell'+x+'_' +y].classList.add('pink');
+    function past (x, y, _self){
+        _self = _self || self;
+        _self.dom.cells['cell'+x+'_' +y].classList.add('gray');
     }
 
-    function past (x, y){
-        self.dom.cells['cell'+x+'_' +y].classList.add('gray');
+    function kill(ship, _self){
+        _self = _self || self;
+        fillRelatedCell(ship.relatedCells, _self);
+        fillShipCells(ship.cells, _self);
+        _self.countKilled++;
+        console.log('countKilled',self.countKilled);
+        if (_self.countKilled>=10) loss();
     }
 
-    function kill(ship){
-        fillRelatedCell(ship.relatedCells);
-        fillShipCells(ship.cells);
-        self.countKilled++;
-        if (self.countKilled>=20) loss();
-    }
-
-    function fillRelatedCell(relatedCells){
+    function fillRelatedCell(relatedCells, _self){
+        _self = _self || self;
         for (var i=0; i<relatedCells.length; i++){
             var x =relatedCells[i].x;
             var y = relatedCells[i].y;
             if (x<=0 || y<=0|| x>self.width || y>self.height) continue;
-            self.dom.cells['cell'+x+'_' +y].classList.add('gray');
+            _self.filledCellsArr.push(x+'_'+ y);
+            _self.dom.cells['cell'+x+'_' +y].classList.add('gray');
         }
     }
 
-    function fillShipCells(shipCells){
+    function fillShipCells(shipCells, _self){
+        _self = _self || self;
         for (var j=0; j<shipCells.length; j++){
             var x =shipCells[j].x;
             var y = shipCells[j].y;
-            if (x<=0 || y<=0|| x>self.width || y>self.height) continue;
-            var cell = self.dom.cells['cell'+x+'_' +y];
+            if (x<=0 || y<=0|| x>_self.width || y>_self.height) continue;
+            var cell = _self.dom.cells['cell'+x+'_' +y];
             removeClass(cell, 'pink');
             cell.classList.add('red');
         }
     }
 
-    function findCell(x, y){
-        var ind = arrayObjectIndexOf(self.cells, '' +x +'_' + y, 'xy');
+    function findCell(x, y, _self){
+        _self = _self || self;
+        var ind = arrayObjectIndexOf(_self.cells, '' +x +'_' + y, 'xy');
         if (ind>=0){
-            return self.cells[ind];
+            return _self.cells[ind];
         }
         return false;
     }
+
     function init(){
         drawGrid();
     }
@@ -162,6 +181,12 @@
         }
         return grid;
     }
+
+    function inFilledCells(x, y, _self){
+        _self = _self || self;
+        return _self.filledCellsArr.indexOf(x  +'_' + y)>=0?true:false;
+    }
+
     function getColor(cl) {
         switch (cl){
             case 0:
@@ -180,5 +205,5 @@
         return cl;
     }
 
-    init();
+    
 }

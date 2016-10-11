@@ -192,7 +192,7 @@ label:hover{
 
 .game{
   display: inline-flex;
-  margin: 10px 0;
+  margin: 50px 0;
 }
 .black{
   background-color: black;
@@ -203,16 +203,19 @@ label:hover{
 }
 .gray{
   background-color: #cacaca;
-  opacity: 0.4;
 }
 .red{
-  background-color: #ff6842;
-  opacity: 1;
+  background-image: url("../images/pokemon-go/png/pikachu-2.png");
+  background-size: cover;
 }
+
 .pink{
-  background-color: #ffef50;
-  opacity: 0.4;
+  background-image: url("../images/pokemon-go/png/zubat.png");
+  background-size: cover;
 }
+
+
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -230,13 +233,13 @@ h2{
   color: white;
 }
 .info-container{
-  width:100%;
-  margin:5px 0;
+  margin:5px 20px;
 }
 html{
-  background-image: url(http://dreempics.com/img/picture/Mar/26/51a6ff79968c93a6542e88e464368bce/10.jpg);
+  /*background-image: url(https://media.giphy.com/media/j7rykqx1xnw8o/giphy.gif);*/
+  background-color: #4dace2;
   -moz-background-size: 100%; /* Firefox 3.6+ */
   -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
   -o-background-size: 100%; /* Opera 9.6+ */
-  background-size: 100%;
+
 }

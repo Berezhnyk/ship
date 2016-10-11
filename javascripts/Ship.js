@@ -173,7 +173,7 @@ function removeClass(obj, cls) {
 
     for (var i = 0; i < classes.length; i++) {
         if (classes[i] == cls) {
-            classes.splice(i, 1); // удалить класс
+            classes.splice(i, 1); 
             i--; // (*)
         }
     }

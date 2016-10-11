@@ -6,29 +6,46 @@
 		<link href="style/main.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-	<h2>Морський бій</h2>
+	<h2 style="z-index: 20; background-color: #0C6BA1;">
+		<span style=" left: 12%;position: absolute;">
+			<label id="generate">Генерувати</label>
+			<label id="start">Грати з ботом (дурним як валянок)</label>
+			<!--<label id="create">Створити гру</label>
+            <input id="opponentId" type="text" alt="Введіть ID гри" />
+            <label id="connect">Підключитися до гри</label>-->
+			<label id="stop" hidden>Завершити гру</label>
+		</span>
+	</h2>
+
 		<div class="container">
-			<div class="info-container">
-				<label id="generate">Генерувати</label>
-				<label id="start">Розпочати нову гру</label>
-				<label id="stop" hidden>Завершити гру</label>
-			</div>
 			<div class="game noselect">
+				<div class="status-container my-status" style="position: absolute;z-index: 10; background-color: #47334d;opacity: 0.6; padding: 20px 10px;left: 0;top: 0;bottom: 0;right: 88%;">
+					<p>4x = 0</p>
+					<p>3x = 0</p>
+					<p>2x = 0</p>
+					<p>1x = 0</p>
+				</div>
 				<div class="game-container">
 				</div>
 				<div class="game-container" hidden>
+				</div>
+				<div class="status-container opponent-status" style="position: absolute;z-index: 10; background-color: #47334d;opacity: 0.6; padding: 20px 10px;left: 88%;top: 0;bottom: 0;right: 0;">
+					<p>4x = 0</p>
+					<p>3x = 0</p>
+					<p>2x = 0</p>
+					<p>1x = 0</p>
 				</div>
 			</div>
 
 		</div>
 	<div class="info-container">
-		<label style="width: 100%;" id="info"></label>
+		<p style="width: 100%;" id="info"></p>
 	</div>
 	<div class="info-container">
-		<label id="info2"></label>
+		<p id="info2"></p>
 	</div>
+		<!--<script src="javascripts/peer.js"></script>-->
 		<script src="javascripts/Ship.js"></script>
-		<script src="javascripts/ShipGenerator.js"></script>
 		<script src="javascripts/SG.js"></script>
 		<script src="javascripts/main.js"></script>
 	</body>
